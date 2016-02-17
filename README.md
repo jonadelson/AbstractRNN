@@ -21,6 +21,7 @@ Here is an example abstract that was produced:
 As you can see, the model sometimes abruptly ends sentences, such as the first one. The model sometimes also has extreme run-on sentences. Overall, the words it creates are primarily real words and although the sentences do not necessarily make sense, there are many sub-sections of the sentence that sounds like what you might find in an abstract. The model sometimes generates fake words that still sound reasonable. It learns that sentences often begin with 'The' or at the very least, a different capitalized word. Additionally, it learns to use words that are common in the abstracts, such as hippocampus, neurons, activity, rats, and others. 
 
 **Word level**
+
 For the word level, I used NLTK to tokenize each abstract into sentences and then each sentence into words. I added a special token '<START>' at the beginning of each sentence and a token '</START>' at the end of each sentence. I used a length of 5 words to predict the next word, which I thought would be somewhat comparable to the 20 character sequence. 
 
 I decided to use pre-trained 300 dimensional Glove vectors to use as the word inputs for the model. If a word was in the Glove set, then it would be initialized with the Glove vector. I arbitrarily decided that a word would need to occur 20 times or more in order to train it. For all other words, I trained a special 'UNKNOWN_WORD' token. 
@@ -36,6 +37,7 @@ To save time, I simply added a space between all tokens, even the '.' (period) e
 For the prompt at the beginning, I left in the '<START>' and 'UNKNOWN_WORD' tokens. 
 
 **Model Comparisons**
+
 Overall, the character model was, not surprisingly, quicker to train because the output layer required a prediction of around 150 characters as opposed to the thousands of words that the word model was trying to predict. 
 
 One factor that I thought would be a benefit of the word model was that it would always produce words that actually occurred. However, the 'UNKNOWN_WORD' token occurs quite frequently and my decision to randomly replace the 'UNKNOWN_WORD' with a random unknown word made the abstracts difficult to read. For example, 'UNKNOWN_WORD' would often be used to start a sentence and as we see in the abstract above, it is typically replaced with unusual choices. 
